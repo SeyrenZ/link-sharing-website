@@ -65,13 +65,17 @@ const SignUp = () => {
                 control={form.control}
                 name="email"
                 render={({ field }) => (
-                  <FormItem className="space-y-0 relative">
+                  <FormItem className="space-y-1 relative">
                     <FormLabel className="text-[12px] leading-[150%] text-primary-darkGrey">
                       Email address
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className={`relative z-10 h-[48px] px-[44px] rounded-lg bg-transparent focus-visible:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)] focus-visible:ring-[1px] focus-visible:ring-primary-violet focus-visible:ring-offset-0`}
+                        className={`relative z-10 h-[48px] px-[44px] rounded-lg bg-transparent  ${
+                          form.formState.errors.email
+                            ? "focus-visible:ring-[1px] focus-visible:ring-red-500 focus-visible:ring-offset-0 focus-visible:shadow-[0_10px_30px_rgba(255,_57,_57,_0.1)] border-primary-red"
+                            : "focus-visible:ring-[1px] focus-visible:ring-primary-violet focus-visible:ring-offset-0 focus-visible:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)]"
+                        }`}
                         placeholder="e.g. alex@gmail.com"
                         {...field}
                       />
@@ -85,14 +89,18 @@ const SignUp = () => {
                 control={form.control}
                 name="password"
                 render={({ field }) => (
-                  <FormItem className="space-y-0 relative">
+                  <FormItem className="space-y-1 relative">
                     <FormLabel className="text-[12px] leading-[150%] text-primary-darkGrey">
                       Create password
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="relative z-10 h-[48px] px-[44px] rounded-lg bg-transparent focus-visible:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)] focus-visible:ring-[1px] focus-visible:ring-primary-violet focus-visible:ring-offset-0"
-                        placeholder="At least 8 characters"
+                        className={`relative z-10 h-[48px] px-[44px] rounded-lg bg-transparent  ${
+                          form.formState.errors.password
+                            ? "focus-visible:ring-[1px] focus-visible:ring-red-500 focus-visible:ring-offset-0 focus-visible:shadow-[0_10px_30px_rgba(255,_57,_57,_0.1)] border-primary-red"
+                            : "focus-visible:ring-[1px] focus-visible:ring-primary-violet focus-visible:ring-offset-0 focus-visible:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)]"
+                        }`}
+                        placeholder="Atleast 8 characters"
                         {...field}
                       />
                     </FormControl>
@@ -105,14 +113,18 @@ const SignUp = () => {
                 control={form.control}
                 name="confirmPassword"
                 render={({ field }) => (
-                  <FormItem className="space-y-0 relative">
+                  <FormItem className="space-y-1 relative">
                     <FormLabel className="text-[12px] leading-[150%] text-primary-darkGrey">
                       Confirm password
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="relative z-10 h-[48px] px-[44px] rounded-lg bg-transparent focus-visible:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)] focus-visible:ring-[1px] focus-visible:ring-primary-violet focus-visible:ring-offset-0"
-                        placeholder="At least 8 characters"
+                        className={`relative z-10 h-[48px] px-[44px] rounded-lg bg-transparent  ${
+                          form.formState.errors.confirmPassword
+                            ? "focus-visible:ring-[1px] focus-visible:ring-red-500 focus-visible:ring-offset-0 focus-visible:shadow-[0_10px_30px_rgba(255,_57,_57,_0.1)] border-primary-red"
+                            : "focus-visible:ring-[1px] focus-visible:ring-primary-violet focus-visible:ring-offset-0 focus-visible:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)]"
+                        }`}
+                        placeholder="Atleast 8 characters"
                         {...field}
                       />
                     </FormControl>
