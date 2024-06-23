@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -16,6 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { EmailIcon, Logo, PasswordIcon } from "./svgs";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { set } from "mongoose";
 
 const formSchema = z
   .object({
@@ -29,6 +31,8 @@ const formSchema = z
   });
 
 const SignUp = () => {
+  const [error, setError] = useState("");
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,10 +42,31 @@ const SignUp = () => {
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
+    e.preventDefault();
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      if (res.status === 400) {
+        setError("This email is already registered");
+      }
+      if (res.status === 200) {
+        setError("");
+        router.push("/login");
+      }
+    } catch (error) {
+      setError("Error, please try again");
+      console.log(error);
+    }
+  };
 
   return (
     <div className="w-full">
@@ -72,7 +97,7 @@ const SignUp = () => {
                     <FormControl>
                       <Input
                         className={`relative z-10 h-[48px] px-[44px] rounded-lg bg-transparent  ${
-                          form.formState.errors.email
+                          form.formState.errors.email || error
                             ? "focus-visible:ring-[1px] focus-visible:ring-red-500 focus-visible:ring-offset-0 focus-visible:shadow-[0_10px_30px_rgba(255,_57,_57,_0.1)] border-primary-red"
                             : "focus-visible:ring-[1px] focus-visible:ring-primary-violet focus-visible:ring-offset-0 focus-visible:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)]"
                         }`}
@@ -82,6 +107,9 @@ const SignUp = () => {
                     </FormControl>
                     <EmailIcon className="absolute z-0 top-[41px] left-[16px]" />
                     <FormMessage className="absolute z-0 top-[38px] right-[15px]" />
+                    <FormDescription className="text-primary-red text-[12px] leading-[150%]">
+                      {error && error}
+                    </FormDescription>
                   </FormItem>
                 )}
               />
@@ -95,6 +123,7 @@ const SignUp = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        type="password"
                         className={`relative z-10 h-[48px] px-[44px] rounded-lg bg-transparent  ${
                           form.formState.errors.password
                             ? "focus-visible:ring-[1px] focus-visible:ring-red-500 focus-visible:ring-offset-0 focus-visible:shadow-[0_10px_30px_rgba(255,_57,_57,_0.1)] border-primary-red"
@@ -119,6 +148,7 @@ const SignUp = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        type="password"
                         className={`relative z-10 h-[48px] px-[44px] rounded-lg bg-transparent  ${
                           form.formState.errors.confirmPassword
                             ? "focus-visible:ring-[1px] focus-visible:ring-red-500 focus-visible:ring-offset-0 focus-visible:shadow-[0_10px_30px_rgba(255,_57,_57,_0.1)] border-primary-red"
