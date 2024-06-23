@@ -17,11 +17,21 @@ import { Input } from "@/components/ui/input";
 import { EmailIcon, Logo, PasswordIcon } from "./svgs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { set } from "mongoose";
 
 const formSchema = z
   .object({
-    email: z.string().email("Can't be empty"),
+    email: z
+      .string()
+      .email()
+      .refine(
+        (value) => {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return emailRegex.test(value);
+        },
+        {
+          message: "Invalid email format", // Custom error message
+        }
+      ),
     password: z.string().min(8, "Please check again"),
     confirmPassword: z.string().min(1, "Please check again"),
   })
