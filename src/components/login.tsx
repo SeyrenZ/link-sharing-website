@@ -32,7 +32,7 @@ const formSchema = z.object({
         message: "Invalid email", // Custom error message
       }
     ),
-  password: z.string().min(8, "Invalid password"),
+  password: z.string().min(8, "Please check again"),
 });
 
 const Login = () => {
@@ -41,7 +41,7 @@ const Login = () => {
   const session = useSession();
 
   useEffect(() => {
-    if (session?.status === "authenticated") router.replace("/dashboard");
+    if (session?.status === "authenticated") router.replace("/profile");
   }, [session, router]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -65,7 +65,7 @@ const Login = () => {
 
     if (res?.error) {
       setError("Invalid email or password");
-      if (res?.url) router.replace("/dashboard");
+      if (res?.url) router.replace("/profile");
     } else {
       setError("");
     }
@@ -111,9 +111,6 @@ const Login = () => {
                     </FormControl>
                     <EmailIcon className="absolute z-0 top-[41px] left-[16px]" />
                     <FormMessage className="absolute z-0 top-[38px] right-[15px]" />
-                    <FormDescription className="text-primary-red text-[12px] leading-[150%]">
-                      {error && error}
-                    </FormDescription>
                   </FormItem>
                 )}
               />
@@ -129,7 +126,7 @@ const Login = () => {
                       <Input
                         type="password"
                         className={`relative z-10 h-[48px] px-[44px] rounded-lg bg-transparent  ${
-                          form.formState.errors.password
+                          form.formState.errors.password || error
                             ? "focus-visible:ring-[1px] focus-visible:ring-red-500 focus-visible:ring-offset-0 focus-visible:shadow-[0_10px_30px_rgba(255,_57,_57,_0.1)] border-primary-red"
                             : "focus-visible:ring-[1px] focus-visible:ring-primary-violet focus-visible:ring-offset-0 focus-visible:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)]"
                         }`}
@@ -142,6 +139,11 @@ const Login = () => {
                   </FormItem>
                 )}
               />
+              {error && (
+                <div className="text-center text-[12px] text-primary-red leading-[150%]">
+                  {error && error}
+                </div>
+              )}
               <Button
                 type="submit"
                 className="w-full h-[46px] bg-primary-violet hover:bg-primary-pastelPurple rounded-lg transition ease-in-out duration-300"
