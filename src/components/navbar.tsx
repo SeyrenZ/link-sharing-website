@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { signOut } from "next-auth/react";
 import { LinkIcon, Logo2, ProfileIcon } from "./svgs";
@@ -9,8 +10,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full">
-      <div className="w-full max-w-[1440px] mx-auto p-6">
+    <div className="w-full p-6">
+      <div className="w-full max-w-[1392px] mx-auto">
         <div className="w-full h-[78px] px-6 py-4 bg-white rounded-lg flex items-center justify-between">
           <div onClick={handleLogout} className="hover:cursor-pointer">
             <Logo2 />
@@ -32,7 +33,7 @@ const Navbar = () => {
           </div>
           <Link
             href="/"
-            className="w-fit px-[27px] py-[11px] border-2 border-primary-violet hover:bg-primary-lightPurple rounded-lg text-primary-violet font-semibold text-[16px] leading-[150%] transition ease-in-out duration-300"
+            className="w-fit px-[27px] py-[11px] border-[1px] border-primary-violet hover:bg-primary-lightPurple rounded-lg text-primary-violet font-semibold text-[16px] leading-[150%] transition ease-in-out duration-300"
           >
             Preview
           </Link>

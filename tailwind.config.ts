@@ -33,7 +33,7 @@ const config = {
           darkGrey: "#333333",
           grey: "#737373",
           lightGrey: "#D9D9D9",
-          brokeWhite: "#FAFAFA",
+          brokenWhite: "#FAFAFA",
           red: "#FF3939",
         },
         secondary: {
