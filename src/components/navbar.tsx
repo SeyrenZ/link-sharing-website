@@ -32,7 +32,7 @@ const Navbar = () => {
             </Link>
           </div>
           <Link
-            href="/"
+            href="/preview"
             className="w-fit px-[27px] py-[11px] border-[1px] border-primary-violet hover:bg-primary-lightPurple rounded-lg text-primary-violet font-semibold text-[16px] leading-[150%] transition ease-in-out duration-300"
           >
             Preview
