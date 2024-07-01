@@ -18,6 +18,7 @@ import { EmailIcon, Logo, PasswordIcon } from "./svgs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
+import LoadingIcon from "./loading-icon";
 
 const formSchema = z.object({
   email: z
@@ -37,6 +38,7 @@ const formSchema = z.object({
 
 const Login = () => {
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const session = useSession();
 
@@ -54,20 +56,25 @@ const Login = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
     e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
+    setIsLoading(true); // Start loading
+    try {
+      const email = e.target[0].value;
+      const password = e.target[1].value;
 
-    const res = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
 
-    if (res?.error) {
-      setError("Invalid email or password");
-      if (res?.url) router.replace("/profile");
-    } else {
-      setError("");
+      if (res?.error) {
+        setError("Invalid email or password");
+        if (res?.url) router.replace("/profile");
+      } else {
+        setError("");
+      }
+    } finally {
+      setIsLoading(false); // End loading regardless of signIn outcome
     }
   };
 
@@ -146,9 +153,9 @@ const Login = () => {
               )}
               <Button
                 type="submit"
-                className="w-full h-[46px] bg-primary-violet hover:bg-primary-pastelPurple rounded-lg transition ease-in-out duration-300"
+                className="w-full h-[46px] bg-primary-violet hover:bg-primary-pastelPurple rounded-lg transition ease-in-out duration-300 flex items-center justify-center"
               >
-                Login
+                {isLoading ? <LoadingIcon /> : "Login"}
               </Button>
               <div className="w-full flex items-center justify-center">
                 <div className="text-primary-grey text-[16px] leading-[150%]">
