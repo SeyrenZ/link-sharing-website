@@ -26,16 +26,21 @@ import {
 import { Input } from "./ui/input";
 import { useLinks } from "@/context/link-state";
 
-const LinkCustomizationCard = () => {
-  const { links, removeLink, addLink } = useLinks();
+interface LinkCustomizationCardProps {
+  index: number;
+}
 
+const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
+  index,
+}) => {
+  const { links, removeLink, addLink } = useLinks();
   return (
     <>
       <div className="w-full h-full p-5 flex flex-col gap-y-3">
         <div className="w-full flex items-center justify-between">
           <div className="flex items-center gap-x-2 text-primary-grey font-bold text-[16px] leading-[150%]">
             <LinkProps />
-            Link #1
+            Link #{index + 1}
           </div>
           <button
             onClick={() => links.length > 0 && removeLink(links[0].timestamp)}

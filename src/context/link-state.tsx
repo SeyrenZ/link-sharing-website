@@ -1,13 +1,14 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
 
-interface LinkType {
+export interface LinkType {
   timestamp: number;
   name: string;
 }
 
 type LinkContextType = {
   links: LinkType[];
+  setLinks: (links: LinkType[]) => void;
   removeLink: (timestamp: number) => void;
   addLink: (link: LinkType) => void;
 };
@@ -30,7 +31,7 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <LinkContext.Provider value={{ links, removeLink, addLink }}>
+    <LinkContext.Provider value={{ links, setLinks, removeLink, addLink }}>
       {children}
     </LinkContext.Provider>
   );

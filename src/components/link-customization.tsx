@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import { LinkCustomizationProps } from "./svgs";
 import LinkCustomizationCard from "./link-customization-card";
 import { useLinks } from "@/context/link-state";
+import { Reorder } from "framer-motion";
 
 const LinkCustomization = () => {
-  const { links, removeLink, addLink } = useLinks();
+  const { links, setLinks, removeLink, addLink } = useLinks();
 
   const handleAddLink = () => {
     addLink({ timestamp: Date.now(), name: "" });
@@ -33,16 +34,24 @@ const LinkCustomization = () => {
           links.length > 0 ? "overflow-y-scroll" : "overflow-hidden"
         }`}
       >
-        <div className="w-full  flex flex-col gap-y-6">
+        <div className="w-full">
           {links.length > 0 ? (
-            links.map((link) => (
-              <div
-                key={link.timestamp}
-                className="w-full h-auto bg-primary-brokenWhite rounded-xl flex flex-col items-center justify-center"
-              >
-                <LinkCustomizationCard />
-              </div>
-            ))
+            <Reorder.Group
+              axis="y"
+              onReorder={setLinks}
+              values={links}
+              className="flex flex-col gap-y-6"
+            >
+              {links.map((link, index) => (
+                <Reorder.Item
+                  key={link.timestamp}
+                  value={link}
+                  className="w-full h-auto bg-primary-brokenWhite rounded-xl flex flex-col items-center justify-center"
+                >
+                  <LinkCustomizationCard index={index} />
+                </Reorder.Item>
+              ))}
+            </Reorder.Group>
           ) : (
             <div className="w-full h-auto bg-primary-brokenWhite rounded-xl flex flex-col items-center justify-center">
               <div className="w-full py-[62px] max-w-[488px] flex flex-col items-center gap-y-6">
@@ -59,6 +68,22 @@ const LinkCustomization = () => {
             </div>
           )}
         </div>
+        {/* <Reorder.Group
+          axis="y"
+          onReorder={setLinks}
+          values={links}
+          className="w-full h-full flex flex-col gap-y-6 overflow-y-scroll"
+        >
+          {links.map((link, index) => (
+            <Reorder.Item
+              key={link.timestamp}
+              value={link}
+              className="your-reorder-item-classes"
+            >
+              <LinkCustomizationCard index={index} />
+            </Reorder.Item>
+          ))}
+        </Reorder.Group> */}
       </div>
       <div className="w-full h-[94px] pl-6 py-6 flex justify-end items-end">
         <button
