@@ -24,8 +24,11 @@ import {
   YoutubeIcon,
 } from "./svgs";
 import { Input } from "./ui/input";
+import { useLinks } from "@/context/link-state";
 
 const LinkCustomizationCard = () => {
+  const { links, removeLink, addLink } = useLinks();
+
   return (
     <>
       <div className="w-full h-full p-5 flex flex-col gap-y-3">
@@ -34,7 +37,10 @@ const LinkCustomizationCard = () => {
             <LinkProps />
             Link #1
           </div>
-          <button className="text-primary-grey text-[16px] leading-[150%] hover:underline">
+          <button
+            onClick={() => links.length > 0 && removeLink(links[0].timestamp)}
+            className="text-primary-grey text-[16px] leading-[150%] hover:underline"
+          >
             Remove
           </button>
         </div>
