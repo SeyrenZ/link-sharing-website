@@ -8,7 +8,7 @@ const LinkCustomization = () => {
   const { links, removeLink, addLink } = useLinks();
 
   const handleAddLink = () => {
-    addLink({ timestamp: Date.now() });
+    addLink({ timestamp: Date.now(), name: "" });
   };
 
   return (
@@ -28,7 +28,11 @@ const LinkCustomization = () => {
       >
         + Add new link
       </button>
-      <div className="w-full h-full overflow-y-scroll flex flex-col gap-y-6">
+      <div
+        className={`w-full h-full flex flex-col gap-y-6 ${
+          links.length > 0 ? "overflow-y-scroll" : "overflow-hidden"
+        }`}
+      >
         <div className="w-full  flex flex-col gap-y-6">
           {links.length > 0 ? (
             links.map((link) => (

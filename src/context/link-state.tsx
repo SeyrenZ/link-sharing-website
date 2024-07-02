@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState } from "react";
 
 interface LinkType {
   timestamp: number;
+  name: string;
 }
 
 type LinkContextType = {
