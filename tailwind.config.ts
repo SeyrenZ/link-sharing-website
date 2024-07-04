@@ -20,6 +20,7 @@ const config = {
     extend: {
       backgroundImage: {
         placeholderImage: "url('/placeholder-image.svg')",
+        profileMockup: "url('/profile-mockup-props.svg')",
       },
       colors: {
         border: "hsl(var(--border))",

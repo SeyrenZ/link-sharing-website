@@ -6,7 +6,8 @@ import { useLinks } from "@/context/link-state";
 import { Reorder } from "framer-motion";
 
 const LinkCustomization = () => {
-  const { links, setLinks, removeLink, addLink } = useLinks();
+  const { links, setLinks, removeLink, addLink, setSelectedPlatform } =
+    useLinks();
 
   const handleAddLink = () => {
     addLink({ timestamp: Date.now(), name: "" });
@@ -68,22 +69,6 @@ const LinkCustomization = () => {
             </div>
           )}
         </div>
-        {/* <Reorder.Group
-          axis="y"
-          onReorder={setLinks}
-          values={links}
-          className="w-full h-full flex flex-col gap-y-6 overflow-y-scroll"
-        >
-          {links.map((link, index) => (
-            <Reorder.Item
-              key={link.timestamp}
-              value={link}
-              className="your-reorder-item-classes"
-            >
-              <LinkCustomizationCard index={index} />
-            </Reorder.Item>
-          ))}
-        </Reorder.Group> */}
       </div>
       <div className="w-full h-[94px] pl-6 py-6 flex justify-end items-end">
         <button

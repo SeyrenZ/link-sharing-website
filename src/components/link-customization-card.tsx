@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -6,25 +7,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  CodepenIcon,
-  CodewarsIcon,
-  DevtoIcon,
-  FacebookIcon,
-  FreeCodeCampIcon,
-  FrontendMentorIcon,
-  GithubIcon,
-  GitlabIcon,
-  HashnodeIcon,
-  LinkIconSmall,
-  LinkProps,
-  LinkedinIcon,
-  TwitchIcon,
-  TwitterIcon,
-  YoutubeIcon,
-} from "./svgs";
+import { GithubIcon, LinkIconSmall, LinkProps } from "./svgs";
 import { Input } from "./ui/input";
 import { useLinks } from "@/context/link-state";
+import { platforms } from "../../public/data/platform-data";
 
 interface LinkCustomizationCardProps {
   index: number;
@@ -33,7 +19,8 @@ interface LinkCustomizationCardProps {
 const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
   index,
 }) => {
-  const { links, removeLink, addLink } = useLinks();
+  const { links, removeLink, setSelectedPlatform } = useLinks();
+
   return (
     <>
       <div className="w-full h-full p-5 flex flex-col gap-y-3">
@@ -51,7 +38,7 @@ const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
         </div>
         <div className="w-full flex flex-col gap-y-1">
           <div className="text-xs text-primary-darkGrey">Platform</div>
-          <Select>
+          <Select onValueChange={setSelectedPlatform}>
             <SelectTrigger className="w-full h-[48px] rounded-lg focus-visible:ring-[0px] focus-visible:ring-offset-0 hover:border-primary-violet hover:ring-offset-0 hover:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)] transition ease-in-out duration-300">
               <SelectValue
                 placeholder={
@@ -65,113 +52,20 @@ const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
               />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem className="group cursor-pointer" value="Github">
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <GithubIcon />
-                  </span>
-                  Github
-                </div>
-              </SelectItem>
-              <SelectItem
-                className="group cursor-pointer"
-                value="Frontend Mentor"
-              >
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <FrontendMentorIcon />
-                  </span>
-                  Frontend Mentor
-                </div>
-              </SelectItem>
-              <SelectItem className="group cursor-pointer" value="Twitter">
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <TwitterIcon />
-                  </span>
-                  Twitter
-                </div>
-              </SelectItem>
-              <SelectItem className="group cursor-pointer" value="Linkedin">
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <LinkedinIcon />
-                  </span>
-                  Linkedin
-                </div>
-              </SelectItem>
-              <SelectItem className="group cursor-pointer" value="YouTube">
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <YoutubeIcon />
-                  </span>
-                  YouTube
-                </div>
-              </SelectItem>
-              <SelectItem className="group cursor-pointer" value="Facebook">
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <FacebookIcon />
-                  </span>
-                  Facebook
-                </div>
-              </SelectItem>
-              <SelectItem className="group cursor-pointer" value="Twitch">
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <TwitchIcon />
-                  </span>
-                  Twitch
-                </div>
-              </SelectItem>
-              <SelectItem className="group cursor-pointer" value="Dev.to">
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <DevtoIcon />
-                  </span>
-                  Dev.to
-                </div>
-              </SelectItem>
-              <SelectItem className="group cursor-pointer" value="Codewars">
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <CodewarsIcon />
-                  </span>
-                  Codewars
-                </div>
-              </SelectItem>
-              <SelectItem className="group cursor-pointer" value="Codepen">
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <CodepenIcon />
-                  </span>
-                  Codepen
-                </div>
-              </SelectItem>
-              <SelectItem className="group cursor-pointer" value="freeCodeCamp">
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <FreeCodeCampIcon />
-                  </span>
-                  freeCodeCamp
-                </div>
-              </SelectItem>
-              <SelectItem className="group cursor-pointer" value="GitLab">
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <GitlabIcon />
-                  </span>
-                  GitLab
-                </div>
-              </SelectItem>
-              <SelectItem className="group cursor-pointer" value="Hashnode">
-                <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
-                  <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
-                    <HashnodeIcon />
-                  </span>
-                  Hashnode
-                </div>
-              </SelectItem>
+              {platforms.map((platform, index) => (
+                <SelectItem
+                  key={index}
+                  className="group cursor-pointer"
+                  value={platform.value}
+                >
+                  <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey group-hover:text-primary-violet transition ease-in-out duration-300">
+                    <span className="text-primary-grey group-hover:text-primary-violet transition ease-in-out duration-300">
+                      {platform.icon}
+                    </span>
+                    {platform.name}
+                  </div>
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>

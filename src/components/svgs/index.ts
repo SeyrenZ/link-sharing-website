@@ -21,3 +21,4 @@ export { default as LinkedinIcon } from "./icon-linkedin.svg";
 export { default as TwitchIcon } from "./icon-twitch.svg";
 export { default as TwitterIcon } from "./icon-twitter.svg";
 export { default as YoutubeIcon } from "./icon-youtube.svg";
+export { default as ArrowRight } from "./arrow-right.svg";
