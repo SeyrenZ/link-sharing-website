@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import { ProfileProvider } from "@/context/profile-state";
 import React from "react";
 
 export default function RootLayout({
@@ -8,8 +9,10 @@ export default function RootLayout({
 }>) {
   return (
     <div lang="en">
-      <Navbar />
-      {children}
+      <ProfileProvider>
+        <Navbar />
+        {children}
+      </ProfileProvider>
     </div>
   );
 }

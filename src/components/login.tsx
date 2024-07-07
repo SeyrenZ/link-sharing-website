@@ -1,8 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,66 +14,18 @@ import { Input } from "@/components/ui/input";
 import { EmailIcon, Logo, PasswordIcon } from "./svgs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import LoadingIcon from "./loading-icon";
-
-const formSchema = z.object({
-  email: z
-    .string()
-    .email()
-    .refine(
-      (value) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(value);
-      },
-      {
-        message: "Invalid email", // Custom error message
-      }
-    ),
-  password: z.string().min(8, "Please check again"),
-});
+import { LoginSubmit } from "@/utils/form-utils";
 
 const Login = () => {
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { onSubmit, error, isLoading, form } = LoginSubmit();
   const router = useRouter();
   const session = useSession();
 
   useEffect(() => {
     if (session?.status === "authenticated") router.replace("/profile");
   }, [session, router]);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
-    e.preventDefault();
-    setIsLoading(true); // Start loading
-    try {
-      const email = e.target[0].value;
-      const password = e.target[1].value;
-
-      const res = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
-      });
-
-      if (res?.error) {
-        setError("Invalid email or password");
-        if (res?.url) router.replace("/profile");
-      } else {
-        setError("");
-      }
-    } finally {
-      setIsLoading(false); // End loading regardless of signIn outcome
-    }
-  };
 
   return (
     <div className="w-full">

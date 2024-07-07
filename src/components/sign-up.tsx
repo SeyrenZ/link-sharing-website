@@ -1,8 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,67 +13,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { EmailIcon, Logo, PasswordIcon } from "./svgs";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
-const formSchema = z
-  .object({
-    email: z
-      .string()
-      .email()
-      .refine(
-        (value) => {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return emailRegex.test(value);
-        },
-        {
-          message: "Invalid email format", // Custom error message
-        }
-      ),
-    password: z.string().min(8, "Please check again"),
-    confirmPassword: z.string().min(1, "Please check again"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"], // This specifies which field the error should be associated with
-  });
+import { SignUpSubmit } from "@/utils/form-utils";
 
 const SignUp = () => {
-  const [error, setError] = useState("");
-  const router = useRouter();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
-
-  const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
-    e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
-
-    try {
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      if (res.status === 400) {
-        setError("This email is already registered");
-      }
-      if (res.status === 200) {
-        setError("");
-        router.push("/login");
-      }
-    } catch (error) {
-      setError("Error, please try again");
-      console.log(error);
-    }
-  };
+  const { onSubmit, error, form } = SignUpSubmit();
 
   return (
     <div className="w-full">

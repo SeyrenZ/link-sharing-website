@@ -1,10 +1,13 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { signOut } from "next-auth/react";
 import { LinkIcon, Logo2, ProfileIcon } from "./svgs";
 import Link from "next/link";
+import { useProfile } from "@/context/profile-state";
 
 const Navbar = () => {
+  const { setIsButtonClicked, isButtonClicked } = useProfile();
+
   const handleLogout = async () => {
     await signOut({ callbackUrl: "/login" });
   };
@@ -17,19 +20,25 @@ const Navbar = () => {
             <Logo2 />
           </div>
           <div className="flex items-center gap-x-4">
-            <Link
-              href="/"
-              className="w-[123px] h-[46px] bg-primary-lightPurple rounded-lg text-primary-violet font-semibold text-[16px] leading-[150%] flex items-center justify-center gap-x-2"
+            <button
+              onClick={() => setIsButtonClicked(false)}
+              className={`group w-fit px-[27px] py-[11px] flex items-center gap-x-2 text-primary-grey hover:text-primary-violet font-semibold text-[16px] leading-[150%] transition ease-in-out duration-300 rounded-lg ${
+                !isButtonClicked &&
+                "text-primary-violet bg-primary-lightPurple "
+              }`}
             >
-              <LinkIcon /> Links
-            </Link>
-            <Link
-              href="/"
-              className="group w-fit px-[27px] py-[11px] bg-transparent flex items-center gap-x-2 text-primary-grey hover:text-primary-violet font-semibold text-[16px] leading-[150%] transition ease-in-out duration-300"
+              <LinkIcon className="group-hover:text-primary-violet" />
+              Links
+            </button>
+            <button
+              onClick={() => setIsButtonClicked(true)}
+              className={`group w-fit px-[27px] py-[11px] flex items-center gap-x-2 text-primary-grey hover:text-primary-violet font-semibold text-[16px] leading-[150%] transition ease-in-out duration-300 rounded-lg ${
+                isButtonClicked && "text-primary-violet bg-primary-lightPurple "
+              }`}
             >
-              <ProfileIcon className="group-hover:text-primary-violet transition ease-in-out duration-300" />
+              <ProfileIcon className="group-hover:text-primary-violet" />
               Profile Details
-            </Link>
+            </button>
           </div>
           <Link
             href="/preview"

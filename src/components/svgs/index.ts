@@ -22,3 +22,4 @@ export { default as TwitchIcon } from "./icon-twitch.svg";
 export { default as TwitterIcon } from "./icon-twitter.svg";
 export { default as YoutubeIcon } from "./icon-youtube.svg";
 export { default as ArrowRight } from "./arrow-right.svg";
+export { default as ImageIcon } from "./image-icon.svg";
