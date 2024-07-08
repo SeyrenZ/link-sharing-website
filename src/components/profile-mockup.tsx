@@ -35,7 +35,6 @@ const ProfileMockup = () => {
                 style={{ backgroundColor: backgroundColor }}
               >
                 <div className="flex gap-x-2">
-                  <div className="text-[10px] text-white">{link.timestamp}</div>
                   <div className="text-white">{platformIcon}</div>
                   <div className="text-xs leading-[150%] text-white">
                     {platformName}
