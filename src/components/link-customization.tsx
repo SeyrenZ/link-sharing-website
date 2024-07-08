@@ -47,9 +47,12 @@ const LinkCustomization = () => {
                 <Reorder.Item
                   key={link.timestamp}
                   value={link}
-                  className="w-full h-auto bg-primary-brokenWhite rounded-xl flex flex-col items-center justify-center"
+                  className="w-full"
                 >
-                  <LinkCustomizationCard index={index} />
+                  <LinkCustomizationCard
+                    index={index}
+                    linkId={link.timestamp}
+                  />
                 </Reorder.Item>
               ))}
             </Reorder.Group>
