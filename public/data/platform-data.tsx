@@ -5,10 +5,12 @@ import {
   FacebookIcon,
   FreeCodeCampIcon,
   FrontendMentorIcon,
+  FrontendMentorIconColorfull,
   GithubIcon,
   GitlabIcon,
   HashnodeIcon,
   LinkedinIcon,
+  StackOverflowIcon,
   TwitchIcon,
   TwitterIcon,
   YoutubeIcon,
@@ -23,6 +25,7 @@ type PlatformInfo = {
 type PlatformValidate = {
   name: string;
   color: string;
+  text: string;
   icon: JSX.Element;
 };
 
@@ -44,29 +47,97 @@ const platforms: PlatformInfo[] = [
   { name: "Gitlab", icon: <GitlabIcon />, value: "gitlab" },
   { name: "Twitch", icon: <TwitchIcon />, value: "twitch" },
   { name: "FreeCodeCamp", icon: <FreeCodeCampIcon />, value: "freecodecamp" },
+  {
+    name: "Stack Overflow",
+    icon: <StackOverflowIcon />,
+    value: "stackoverflow",
+  },
 ];
 
 const platformsValidation: { [key: string]: PlatformValidate } = {
-  github: { name: "GitHub", color: "#333", icon: <GithubIcon /> },
+  github: {
+    name: "GitHub",
+    color: "#1A1A1A",
+    icon: <GithubIcon />,
+    text: "#FFFFFF",
+  },
   frontendmentor: {
     name: "Frontend Mentor",
-    color: "#0a192f",
-    icon: <FrontendMentorIcon />,
+    color: "#FFFFFF",
+    icon: <FrontendMentorIconColorfull />,
+    text: "#333333",
   },
-  twitter: { name: "Twitter", color: "#1DA1F2", icon: <TwitterIcon /> },
-  linkedin: { name: "LinkedIn", color: "#0077b5", icon: <LinkedinIcon /> },
-  youtube: { name: "YouTube", color: "#FF0000", icon: <YoutubeIcon /> },
-  facebook: { name: "Facebook", color: "#4267B2", icon: <FacebookIcon /> },
-  hashnode: { name: "Hashnode", color: "#2962FF", icon: <HashnodeIcon /> },
-  codepen: { name: "Codepen", color: "#0EBEFF", icon: <CodepenIcon /> },
-  codewars: { name: "Codewars", color: "#B1361E", icon: <CodewarsIcon /> },
-  devto: { name: "Dev.to", color: "#0A0A0A", icon: <DevtoIcon /> },
-  gitlab: { name: "Gitlab", color: "#FC6D26", icon: <GitlabIcon /> },
-  twitch: { name: "Twitch", color: "#6441A4", icon: <TwitchIcon /> },
+  twitter: {
+    name: "Twitter",
+    color: "#43B7E9",
+    icon: <TwitterIcon />,
+    text: "#FFFFFF",
+  },
+  linkedin: {
+    name: "LinkedIn",
+    color: "#2D68FF",
+    icon: <LinkedinIcon />,
+    text: "#FFFFFF",
+  },
+  youtube: {
+    name: "YouTube",
+    color: "#EE3939",
+    icon: <YoutubeIcon />,
+    text: "#FFFFFF",
+  },
+  facebook: {
+    name: "Facebook",
+    color: "#2442AC",
+    icon: <FacebookIcon />,
+    text: "#FFFFFF",
+  },
+  hashnode: {
+    name: "Hashnode",
+    color: "#0330D1",
+    icon: <HashnodeIcon />,
+    text: "#FFFFFF",
+  },
+  codepen: {
+    name: "Codepen",
+    color: "#0EBEFF",
+    icon: <CodepenIcon />,
+    text: "#FFFFFF",
+  },
+  codewars: {
+    name: "Codewars",
+    color: "#8A1A50",
+    icon: <CodewarsIcon />,
+    text: "#FFFFFF",
+  },
+  devto: {
+    name: "Dev.to",
+    color: "#333333",
+    icon: <DevtoIcon />,
+    text: "#FFFFFF",
+  },
+  gitlab: {
+    name: "Gitlab",
+    color: "#EB4925",
+    icon: <GitlabIcon />,
+    text: "#FFFFFF",
+  },
+  twitch: {
+    name: "Twitch",
+    color: "#EE3FC8",
+    icon: <TwitchIcon />,
+    text: "#FFFFFF",
+  },
   freecodecamp: {
     name: "FreeCodeCamp",
-    color: "#006400",
+    color: "#302267",
     icon: <FreeCodeCampIcon />,
+    text: "#FFFFFF",
+  },
+  stackoverflow: {
+    name: "Stack Overflow",
+    color: "#F48024",
+    icon: <StackOverflowIcon />,
+    text: "#FFFFFF",
   },
 };
 

@@ -39,7 +39,9 @@ const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
         <div className="w-full flex flex-col gap-y-1">
           <div className="text-xs text-primary-darkGrey">Platform</div>
           {/* <Select onValueChange={setSelectedPlatform}> */}
-          <Select onValueChange={(platform) => updateLinkPlatform(index, platform)}>
+          <Select
+            onValueChange={(platform) => updateLinkPlatform(index, platform)}
+          >
             <SelectTrigger className="w-full h-[48px] rounded-lg focus-visible:ring-[0px] focus-visible:ring-offset-0 hover:border-primary-violet hover:ring-offset-0 hover:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)] transition ease-in-out duration-300">
               <SelectValue
                 placeholder={

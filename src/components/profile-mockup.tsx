@@ -16,31 +16,40 @@ const ProfileMockup = () => {
           axis="y"
           onReorder={setLinks}
           values={links}
-          className="w-[237px] h-[300px] rounded-lg flex flex-col gap-y-5 absolute bottom-[50px] left-0 right-0 mx-auto overflow-hidden"
+          className="w-[237px] h-[300px] rounded-lg flex flex-col gap-y-5 absolute bottom-[54px] left-0 right-0 mx-auto overflow-hidden"
         >
           {links.map((link, index) => {
             // Call getPlatformInfo here where 'link' is defined
             const platformInfo = platformsValidation[link.platform] || {};
             const {
+              text: text = "#ffffff",
               color: backgroundColor = "#333",
               name: platformName = "GitHub",
               icon: platformIcon = <GithubIcon />,
             } = platformInfo;
 
+            const uniquePlatform =
+              link.platform === "frontendmentor" ? "#333333" : "#ffffff";
+
             return (
               <Reorder.Item
                 key={link.timestamp}
                 value={link}
-                className="w-full h-[44px] px-4 py-[14px] bg-black rounded-lg flex items-center justify-between"
+                className={`w-full h-[44px] px-4 py-[14px] bg-black rounded-lg flex items-center justify-between ${
+                  uniquePlatform ? "border-[1px]" : ""
+                }`}
                 style={{ backgroundColor: backgroundColor }}
               >
                 <div className="flex gap-x-2">
                   <div className="text-white">{platformIcon}</div>
-                  <div className="text-xs leading-[150%] text-white">
+                  <div
+                    className="text-xs leading-[150%]"
+                    style={{ color: text }}
+                  >
                     {platformName}
                   </div>
                 </div>
-                <ArrowRight />
+                <ArrowRight style={{ color: uniquePlatform }} />
               </Reorder.Item>
             );
           })}
