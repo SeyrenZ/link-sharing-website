@@ -16,7 +16,7 @@ const ProfileMockup = () => {
           axis="y"
           onReorder={setLinks}
           values={links}
-          className="w-[237px] h-[300px] flex flex-col gap-y-5 absolute bottom-[50px] left-0 right-0 mx-auto"
+          className="w-[237px] h-[300px] rounded-lg flex flex-col gap-y-5 absolute bottom-[50px] left-0 right-0 mx-auto overflow-hidden"
         >
           {links.map((link, index) => {
             // Call getPlatformInfo here where 'link' is defined
