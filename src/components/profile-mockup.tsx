@@ -32,24 +32,24 @@ const ProfileMockup = () => {
               link.platform === "frontendmentor" ? "#333333" : "#ffffff";
 
             return (
-              <Reorder.Item
-                key={link.timestamp}
-                value={link}
-                className={`w-full h-[44px] px-4 py-[14px] bg-black rounded-lg flex items-center justify-between ${
-                  uniquePlatform ? "border-[1px]" : ""
-                }`}
-                style={{ backgroundColor: backgroundColor }}
-              >
-                <div className="flex gap-x-2">
-                  <div className="text-white">{platformIcon}</div>
-                  <div
-                    className="text-xs leading-[150%]"
-                    style={{ color: text }}
-                  >
-                    {platformName}
+              <Reorder.Item key={link.timestamp} value={link}>
+                <div
+                  className={`w-full h-[44px] px-4 py-[14px] bg-black rounded-lg flex items-center justify-between ${
+                    uniquePlatform ? "border-[1px]" : ""
+                  }`}
+                  style={{ backgroundColor: backgroundColor }}
+                >
+                  <div className="flex gap-x-2">
+                    <div className="text-white">{platformIcon}</div>
+                    <div
+                      className="text-xs leading-[150%]"
+                      style={{ color: text }}
+                    >
+                      {platformName}
+                    </div>
                   </div>
+                  <ArrowRight style={{ color: uniquePlatform }} />
                 </div>
-                <ArrowRight style={{ color: uniquePlatform }} />
               </Reorder.Item>
             );
           })}

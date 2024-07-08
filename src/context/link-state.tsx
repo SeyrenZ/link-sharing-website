@@ -5,11 +5,7 @@ export interface LinkType {
   timestamp: number;
   name: string;
   platform: string; // New property
-}
-
-interface LinkInfo {
-  links: LinkType[];
-  selectedPlatform: string;
+  url: string;
 }
 
 type LinkContextType = {
@@ -38,7 +34,9 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const updateLinkPlatform = (index: number, platform: string) => {
-    setLinks(links.map((link, i) => i === index ? { ...link, platform } : link));
+    setLinks(
+      links.map((link, i) => (i === index ? { ...link, platform } : link))
+    );
   };
 
   return (
@@ -48,7 +46,7 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
         setLinks,
         removeLink,
         addLink,
-        updateLinkPlatform, 
+        updateLinkPlatform,
       }}
     >
       {children}

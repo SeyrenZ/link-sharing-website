@@ -9,7 +9,7 @@ const LinkCustomization = () => {
   const { links, setLinks, removeLink, addLink } = useLinks();
 
   const handleAddLink = () => {
-    addLink({ timestamp: Date.now(), name: "", platform: "github" }); // Replace "DefaultPlatform" with the appropriate value or logic
+    addLink({ timestamp: Date.now(), name: "", platform: "github", url: "" }); // Replace "DefaultPlatform" with the appropriate value or logic
   };
 
   return (
