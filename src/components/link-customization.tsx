@@ -12,6 +12,39 @@ const LinkCustomization = () => {
     addLink({ timestamp: Date.now(), name: "", platform: "github", url: "" }); // Replace "DefaultPlatform" with the appropriate value or logic
   };
 
+  interface LinksData {
+    [key: `data${number}`]: string; // This allows any key that matches the pattern `data1`, `data2`, etc., with string values
+  }
+  
+  const handleSave = async () => {
+    const linksData = links.reduce<LinksData>((acc, link, index) => {
+      acc[`data${index + 1}`] = link.url; // Now TypeScript knows what kind of keys and values acc can have
+      return acc;
+    }, {});
+  
+    try {
+      const response = await fetch('localhost:3000/api/links', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ links: linksData }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      console.log('Success:', data);
+      // Handle success, maybe clear links or show a success message
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle error, maybe show an error message
+    }
+  };
+
+
   return (
     <div className="w-full max-w-[808px] h-[834px] px-10 pt-10 rounded-xl bg-white flex flex-col gap-y-10 relative">
       <div className="w-full flex flex-col gap-y-2">
@@ -71,6 +104,7 @@ const LinkCustomization = () => {
       </div>
       <div className="w-full h-[94px] pl-6 py-6 flex justify-end items-end">
         <button
+        onClick={handleSave}
           disabled={true}
           className="w-fit px-[27px] py-[11px] bg-primary-violet hover:bg-primary-pastelPurple rounded-lg text-white text-[16px] leading-[150%] font-semibold transition ease-in-out duration-300 disabled:bg-primary-pastelPurple disabled:cursor-not-allowed"
         >
