@@ -17,7 +17,7 @@ export const POST = async (request: any) => {
 
     const updatedUser = await user.findOneAndUpdate(
       { email: email },
-      { $set: { links: { $each: linksArray } } },
+      { $set: { links: linksArray } },
       { new: true }
     );
 
