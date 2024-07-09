@@ -11,7 +11,6 @@ import { GithubIcon, LinkIconSmall, LinkProps } from "./svgs";
 import { Input } from "./ui/input";
 import { useLinks } from "@/context/link-state";
 import { platforms } from "../../public/data/platform-data";
-import { platform } from "os";
 
 interface LinkCustomizationCardProps {
   index: number;
