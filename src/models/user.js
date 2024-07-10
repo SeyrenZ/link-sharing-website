@@ -16,7 +16,12 @@ const userSchema = new Schema(
     links: {
       type: JSON,
       default: [],
-    }
+    },
+    userId: {
+      type: String,
+      unique: true,
+      required: true,
+    },
   },
   { timestamps: true }
 );

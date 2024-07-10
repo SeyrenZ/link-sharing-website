@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { LinkCustomizationProps } from "./svgs";
 import LinkCustomizationCard from "./link-customization-card";
 import { useLinks } from "@/context/link-state";
@@ -12,28 +12,31 @@ const LinkCustomization = () => {
     addLink({ timestamp: Date.now(), name: "", platform: "github", url: "" }); // Replace "DefaultPlatform" with the appropriate value or logic
   };
 
-  const handleSave = async () => {
+  const handleSave = async (email: string) => {
     try {
-      const response = await fetch('http://localhost:3000/api/data/store-link', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: 'user@gmail.com',
-          links: links.map(({ platform, url }) => ({ platform, url })),
-        }),
-      });
-  
+      const response = await fetch(
+        "http://localhost:3000/api/data/store-link",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            links: links.map(({ platform, url }) => ({ platform, url })),
+          }),
+        }
+      );
+
       if (!response.ok) {
-        throw new Error('Failed to save links');
+        throw new Error("Failed to save links");
       }
-  
+
       // Handle success response
-      console.log('Links saved successfully!');
+      console.log("Links saved successfully!");
       // Optionally, you can use alert or set a state to show a success message
     } catch (error) {
-      console.error('Error saving links:', error);
+      console.error("Error saving links:", error);
       // Optionally, you can use alert or set a state to show an error message
     }
   };
@@ -97,8 +100,7 @@ const LinkCustomization = () => {
       </div>
       <div className="w-full h-[94px] pl-6 py-6 flex justify-end items-end">
         <button
-        onClick={handleSave}
-          // disabled={true}
+          onClick={handleSave}
           className="w-fit px-[27px] py-[11px] bg-primary-violet hover:bg-primary-pastelPurple rounded-lg text-white text-[16px] leading-[150%] font-semibold transition ease-in-out duration-300 disabled:bg-primary-pastelPurple disabled:cursor-not-allowed"
         >
           Save

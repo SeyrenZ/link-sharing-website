@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { v4 as uuidv4 } from "uuid";
 
 const signUpFormSchema = z
   .object({
@@ -46,13 +47,15 @@ export const SignUpSubmit = () => {
     const email = e.target[0].value;
     const password = e.target[1].value;
 
+    const userId = uuidv4();
+
     try {
       const res = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, userId }),
       });
       if (res.status === 400) {
         setError("This email is already registered");
