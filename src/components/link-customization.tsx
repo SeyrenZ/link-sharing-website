@@ -12,7 +12,7 @@ const LinkCustomization = () => {
     addLink({ timestamp: Date.now(), name: "", platform: "github", url: "" }); // Replace "DefaultPlatform" with the appropriate value or logic
   };
 
-  const handleSave = async (email: string) => {
+  const handleSave = async () => {
     try {
       const response = await fetch(
         "http://localhost:3000/api/data/store-link",
@@ -22,7 +22,7 @@ const LinkCustomization = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email: email,
+            email: "kaiserzulkarnain@gmail.com",
             links: links.map(({ platform, url }) => ({ platform, url })),
           }),
         }

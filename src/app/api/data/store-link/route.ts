@@ -10,9 +10,9 @@ export const POST = async (request: any) => {
 
   try {
     // Correctly map 'links' to 'linksArray' using the actual 'link' object in the map function
-    const linksArray = links.map((link: { platform: string; url: string; }) => ({
+    const linksArray = links.map((link: { platform: string; url: string }) => ({
       name: link.platform,
-      url: link.url
+      url: link.url,
     }));
 
     const updatedUser = await user.findOneAndUpdate(
@@ -29,4 +29,4 @@ export const POST = async (request: any) => {
   } catch (error: any) {
     return new NextResponse(error.message, { status: 500 }); // Ensure that 'error.message' is used to avoid sending raw error objects
   }
-}
+};

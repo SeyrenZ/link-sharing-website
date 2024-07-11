@@ -23,10 +23,10 @@ export const GET = async (req: NextRequest) => {
     return new NextResponse(JSON.stringify(userLinks), {
       status: 200,
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     });
   } catch (error: any) {
     return new NextResponse(error.message, { status: 500 });
   }
-}
+};
