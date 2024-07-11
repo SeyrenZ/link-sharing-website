@@ -6,6 +6,7 @@ import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { v4 as uuidv4 } from "uuid";
+import { Session } from "inspector";
 
 const signUpFormSchema = z
   .object({
@@ -116,10 +117,14 @@ export const LoginSubmit = () => {
         email,
         password,
       });
+      
+      localStorage.setItem("email", email);
 
       if (res?.error) {
         setError("Invalid email or password");
-        if (res?.url) router.replace("/profile");
+        if (res?.url) {
+          router.replace("/profile")
+        }
       } else {
         setError("");
       }

@@ -24,7 +24,10 @@ const Login = () => {
   const session = useSession();
 
   useEffect(() => {
-    if (session?.status === "authenticated") router.replace("/profile");
+    if (session?.status === "authenticated") { 
+      
+      router.replace("/profile");
+    }
   }, [session, router]);
 
   return (

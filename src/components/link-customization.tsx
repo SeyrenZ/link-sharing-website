@@ -22,7 +22,7 @@ const LinkCustomization = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email: "kaiserzulkarnain@gmail.com",
+            email: localStorage.getItem("email"),
             links: links.map(({ platform, url }) => ({ platform, url })),
           }),
         }
