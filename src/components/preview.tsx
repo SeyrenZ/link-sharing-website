@@ -6,7 +6,7 @@ import { platformsValidation } from "../../public/data/platform-data";
 import Link from "next/link";
 
 const Preview = () => {
-  const { linkData } = useLinks();
+  const { links } = useLinks();
 
   return (
     <div className="w-full max-w-[1440px] mx-auto pt-[208px] flex items-center justify-center">
@@ -23,7 +23,7 @@ const Preview = () => {
           </div>
         </div>
         <div className="w-[237px] h-auto rounded-lg flex flex-col gap-y-5 mx-auto overflow-hidden">
-          {linkData.map((link, index) => {
+          {links.map((link, index) => {
             // Call getPlatformInfo here where 'link' is defined
             const platformInfo = platformsValidation[link.platform] || {};
             const {
