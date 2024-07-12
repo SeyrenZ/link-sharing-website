@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { LinkCustomizationProps } from "./svgs";
 import LinkCustomizationCard from "./link-customization-card";
 import { useLinks } from "@/context/link-state";
@@ -11,6 +11,26 @@ const LinkCustomization = () => {
   const handleAddLink = () => {
     addLink({ timestamp: Date.now(), name: "", platform: "github", url: "" }); // Replace "DefaultPlatform" with the appropriate value or logic
   };
+
+  useEffect(() => {
+    const fetchLinks = async () => {
+      // Retrieve the email from localStorage
+      const email = localStorage.getItem("email"); // Assuming 'email' is the key used to store the email
+
+      // Check if email exists
+      if (email) {
+        const response = await fetch(`/api/data/get-link?email=${email}`);
+        if (response.ok) {
+          const data = await response.json();
+          setLinks(data); // Update state with fetched data
+        }
+      } else {
+        console.log("No email found in localStorage");
+      }
+    };
+
+    fetchLinks();
+  }, [setLinks]);
 
   const handleSave = async () => {
     try {
