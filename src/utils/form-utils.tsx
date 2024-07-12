@@ -117,13 +117,14 @@ export const LoginSubmit = () => {
         email,
         password,
       });
-      
+
       localStorage.setItem("email", email);
+      window.location.reload();
 
       if (res?.error) {
         setError("Invalid email or password");
         if (res?.url) {
-          router.replace("/profile")
+          router.replace("/profile");
         }
       } else {
         setError("");
