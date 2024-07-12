@@ -77,7 +77,10 @@ const LinkCustomization = () => {
                   value={link}
                   className="w-full"
                 >
-                  <LinkCustomizationCard index={index} />
+                  <LinkCustomizationCard
+                    index={index}
+                    timestamp={link.timestamp}
+                  />
                 </Reorder.Item>
               ))}
             </Reorder.Group>

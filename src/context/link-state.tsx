@@ -11,7 +11,8 @@ export interface LinkType {
 type LinkContextType = {
   links: LinkType[];
   setLinks: (links: LinkType[]) => void;
-  updateLinkPlatform: (index: number, platform: string) => void; // Updated part
+  updateLinkPlatform: (index: number, platform: string) => void;
+  updateLinkUrl: (index: number, url: string) => void; // Updated part
   removeLink: (timestamp: number) => void;
   addLink: (link: LinkType) => void;
 };
@@ -39,6 +40,10 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
+  const updateLinkUrl = (index: number, url: string) => {
+    setLinks(links.map((link, i) => (i === index ? { ...link, url } : link)));
+  };
+
   return (
     <LinkContext.Provider
       value={{
@@ -47,6 +52,7 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
         removeLink,
         addLink,
         updateLinkPlatform,
+        updateLinkUrl,
       }}
     >
       {children}

@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { useLinks } from "@/context/link-state";
 import { ArrowRight, GithubIcon } from "./svgs";
 import { platformsValidation } from "../../public/data/platform-data";
@@ -6,6 +7,28 @@ import Link from "next/link";
 
 const Preview = () => {
   const { links } = useLinks();
+  const [linkData, setLinkData] = useState(links);
+
+  useEffect(() => {
+    const fetchLinks = async () => {
+      // Retrieve the email from localStorage
+      const email = localStorage.getItem("email"); // Assuming 'email' is the key used to store the email
+
+      // Check if email exists
+      if (email) {
+        const response = await fetch(`/api/data/get-link?email=${email}`);
+        if (response.ok) {
+          const data = await response.json();
+          setLinkData(data);
+          console.log(data); // Update state with fetched data
+        }
+      } else {
+        console.log("No email found in localStorage");
+      }
+    };
+
+    fetchLinks();
+  }, []);
 
   return (
     <div className="w-full max-w-[1440px] mx-auto pt-[208px] flex items-center justify-center">
@@ -22,7 +45,7 @@ const Preview = () => {
           </div>
         </div>
         <div className="w-[237px] h-auto rounded-lg flex flex-col gap-y-5 mx-auto overflow-hidden">
-          {links.map((link, index) => {
+          {linkData.map((link, index) => {
             // Call getPlatformInfo here where 'link' is defined
             const platformInfo = platformsValidation[link.platform] || {};
             const {
@@ -36,9 +59,10 @@ const Preview = () => {
               link.platform === "frontendmentor" ? "#333333" : "#ffffff";
 
             return (
-              <div key={link.timestamp}>
+              <div key={index}>
                 <Link
                   href={link.url}
+                  target="_blank"
                   className={`w-full h-[56px] px-4 py-[14px] bg-black rounded-lg flex items-center justify-between ${
                     uniquePlatform ? "border-[1px]" : ""
                   }`}

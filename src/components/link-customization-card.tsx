@@ -14,12 +14,17 @@ import { platforms } from "../../public/data/platform-data";
 
 interface LinkCustomizationCardProps {
   index: number;
+  timestamp: number;
 }
 
 const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
   index,
+  timestamp,
 }) => {
-  const { links, removeLink, updateLinkPlatform } = useLinks();
+  const { links, removeLink, updateLinkPlatform, updateLinkUrl } = useLinks();
+  const handleLinkChange = (newUrl: string) => {
+    updateLinkUrl(index, newUrl);
+  };
 
   return (
     <>
@@ -30,7 +35,7 @@ const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
             Link #{index + 1}
           </div>
           <button
-            onClick={() => links.length > 0 && removeLink(links[0].timestamp)}
+            onClick={() => links.length > 0 && removeLink(timestamp)}
             className="text-primary-grey text-[16px] leading-[150%] hover:underline"
           >
             Remove
@@ -75,6 +80,7 @@ const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
           <div className="text-xs text-primary-darkGrey">Link</div>
           <div className="relative">
             <Input
+              onChange={(e) => handleLinkChange(e.target.value)}
               placeholder="https://www.github.com/benwright"
               className="w-full rounded-lg h-[48px] pl-10 focus-visible:ring-0 focus-visible:ring-inset-0 hover:border-primary-violet hover:ring-offset-0 hover:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)] transition ease-in-out duration-300"
             />
