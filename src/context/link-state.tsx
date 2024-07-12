@@ -10,6 +10,7 @@ export interface LinkType {
 
 type LinkContextType = {
   links: LinkType[];
+  linkData: LinkType[];
   setLinks: (links: LinkType[]) => void;
   updateLinkPlatform: (index: number, platform: string) => void;
   updateLinkUrl: (index: number, url: string) => void; // Updated part
@@ -23,6 +24,27 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [links, setLinks] = useState<LinkType[]>([]);
+  const [linkData, setLinkData] = useState<LinkType[]>([]);
+
+  useEffect(() => {
+    const fetchLinks = async () => {
+      // Retrieve the email from localStorage
+      const email = localStorage.getItem("email"); // Assuming 'email' is the key used to store the email
+
+      // Check if email exists
+      if (email) {
+        const response = await fetch(`/api/data/get-link?email=${email}`);
+        if (response.ok) {
+          const data = await response.json();
+          setLinkData(data); // Update state with fetched data
+        }
+      } else {
+        console.log("No email found in localStorage");
+      }
+    };
+
+    fetchLinks();
+  }, []);
 
   const addLink = (link: LinkType) => {
     if (links.length < 5) {
@@ -48,6 +70,7 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
     <LinkContext.Provider
       value={{
         links,
+        linkData,
         setLinks,
         removeLink,
         addLink,

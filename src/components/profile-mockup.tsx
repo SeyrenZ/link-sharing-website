@@ -7,8 +7,6 @@ import { Reorder } from "framer-motion";
 const ProfileMockup = () => {
   const { links, setLinks } = useLinks();
 
-  // Moved getPlatformInfo call inside the map function
-
   return (
     <div className="w-full max-w-[560px] h-[834px] rounded-xl bg-white flex items-center justify-center">
       <div className="w-full max-w-[307px] h-[632px] bg-profileMockup relative">

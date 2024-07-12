@@ -6,28 +6,7 @@ import { platformsValidation } from "../../public/data/platform-data";
 import Link from "next/link";
 
 const Preview = () => {
-  const { links } = useLinks();
-  const [linkData, setLinkData] = useState(links);
-
-  useEffect(() => {
-    const fetchLinks = async () => {
-      // Retrieve the email from localStorage
-      const email = localStorage.getItem("email"); // Assuming 'email' is the key used to store the email
-
-      // Check if email exists
-      if (email) {
-        const response = await fetch(`/api/data/get-link?email=${email}`);
-        if (response.ok) {
-          const data = await response.json();
-          setLinkData(data); // Update state with fetched data
-        }
-      } else {
-        console.log("No email found in localStorage");
-      }
-    };
-
-    fetchLinks();
-  }, []);
+  const { linkData } = useLinks();
 
   return (
     <div className="w-full max-w-[1440px] mx-auto pt-[208px] flex items-center justify-center">
