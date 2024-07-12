@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar";
 import { ProfileProvider } from "@/context/profile-state";
-import React from "react";
+import React, { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -8,11 +8,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div lang="en">
+    <Suspense>
       <ProfileProvider>
         <Navbar />
         {children}
       </ProfileProvider>
-    </div>
+    </Suspense>
   );
 }

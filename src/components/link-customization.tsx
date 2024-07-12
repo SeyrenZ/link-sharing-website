@@ -6,7 +6,7 @@ import { useLinks } from "@/context/link-state";
 import { Reorder } from "framer-motion";
 
 const LinkCustomization = () => {
-  const { links, setLinks, removeLink, addLink } = useLinks();
+  const { links, setLinks, addLink } = useLinks();
 
   const handleAddLink = () => {
     addLink({ timestamp: Date.now(), name: "", platform: "github", url: "" }); // Replace "DefaultPlatform" with the appropriate value or logic

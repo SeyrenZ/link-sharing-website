@@ -19,8 +19,7 @@ const Preview = () => {
         const response = await fetch(`/api/data/get-link?email=${email}`);
         if (response.ok) {
           const data = await response.json();
-          setLinkData(data);
-          console.log(data); // Update state with fetched data
+          setLinkData(data); // Update state with fetched data
         }
       } else {
         console.log("No email found in localStorage");

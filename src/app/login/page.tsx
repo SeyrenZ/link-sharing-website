@@ -1,8 +1,12 @@
 import Login from "@/components/login";
-import React from "react";
+import React, { Suspense } from "react";
 
 const LoginPage = () => {
-  return <Login />;
+  return (
+    <Suspense>
+      <Login />
+    </Suspense>
+  );
 };
 
 export default LoginPage;

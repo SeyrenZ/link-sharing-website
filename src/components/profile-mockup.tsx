@@ -18,7 +18,7 @@ const ProfileMockup = () => {
           values={links}
           className="w-[237px] h-[300px] rounded-lg flex flex-col gap-y-5 absolute bottom-[54px] left-0 right-0 mx-auto overflow-hidden"
         >
-          {links.map((link, index) => {
+          {links.map((link) => {
             // Call getPlatformInfo here where 'link' is defined
             const platformInfo = platformsValidation[link.platform] || {};
             const {

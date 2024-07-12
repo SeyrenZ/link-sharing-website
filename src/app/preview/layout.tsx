@@ -1,5 +1,5 @@
 import PreviewNavbar from "@/components/preview-navbar";
-import React from "react";
+import React, { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -7,9 +7,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div lang="en">
+    <Suspense>
       <PreviewNavbar />
       {children}
-    </div>
+    </Suspense>
   );
 }
