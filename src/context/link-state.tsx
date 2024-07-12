@@ -24,23 +24,6 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [links, setLinks] = useState<LinkType[]>([]);
 
-  useEffect(() => {
-    const fetchLinks = async () => {
-      const email = localStorage.getItem("email");
-      if (email) {
-        const response = await fetch(`/api/data/get-link?email=${email}`);
-        if (response.ok) {
-          const data = await response.json();
-          setLinks(data); // Update state with fetched data
-        }
-      } else {
-        console.log("No email found in localStorage");
-      }
-    };
-
-    fetchLinks();
-  }, []); // Use the extracted variable here
-
   const addLink = (link: LinkType) => {
     if (links.length < 5) {
       setLinks([...links, link]);

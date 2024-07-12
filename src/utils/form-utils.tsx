@@ -119,7 +119,6 @@ export const LoginSubmit = () => {
       });
 
       localStorage.setItem("email", email);
-      window.location.reload();
 
       if (res?.error) {
         setError("Invalid email or password");
