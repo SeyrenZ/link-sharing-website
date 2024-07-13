@@ -21,30 +21,16 @@ import { useLinks } from "@/context/link-state";
 
 const Login = () => {
   const { onSubmit, error, isLoading, form } = LoginSubmit();
-  const { setLinks } = useLinks();
+  const { setLinks, fetchAndSetLinks } = useLinks();
   const router = useRouter();
   const { data: session, status } = useSession(); // Destructure to get status directly
-
-  // Function to fetch and set links
-  const fetchAndSetLinks = useCallback(async () => {
-    const email = localStorage.getItem("email");
-    if (email) {
-      const response = await fetch(`/api/data/get-link?email=${email}`);
-      if (response.ok) {
-        const data = await response.json();
-        setLinks(data);
-      }
-    } else {
-      console.log("No email found in localStorage");
-    }
-  }, [setLinks]);
 
   useEffect(() => {
     if (status === "authenticated") {
       fetchAndSetLinks(); // Call this function when the user is authenticated
       router.replace("/profile");
     }
-  }, [status, router, fetchAndSetLinks, setLinks]);
+  }, [status, router, fetchAndSetLinks]);
 
   return (
     <div className="w-full">

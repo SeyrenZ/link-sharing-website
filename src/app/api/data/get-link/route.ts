@@ -20,9 +20,10 @@ export const GET = async (req: NextRequest) => {
 
     // Assuming 'links' is an array of objects with 'url' and 'platform' properties
     const linkData = foundUser.links.map(
-      (link: { url: string; name: string }) => ({
+      (link: { url: string; name: string; id: string }) => ({
         url: link.url,
         platform: link.name,
+        id: link.id,
       })
     );
 

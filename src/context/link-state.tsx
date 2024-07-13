@@ -1,8 +1,10 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useCallback } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export interface LinkType {
-  timestamp: number;
+  id: string;
   name: string;
   platform: string; // New property
   url: string;
@@ -13,8 +15,9 @@ type LinkContextType = {
   setLinks: (links: LinkType[]) => void;
   updateLinkPlatform: (index: number, platform: string) => void;
   updateLinkUrl: (index: number, url: string) => void; // Updated part
-  removeLink: (timestamp: number) => void;
+  removeLink: (id: string) => void;
   addLink: (link: LinkType) => void;
+  fetchAndSetLinks: () => void;
 };
 
 const LinkContext = createContext<LinkContextType | undefined>(undefined);
@@ -24,14 +27,32 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [links, setLinks] = useState<LinkType[]>([]);
 
-  const addLink = (link: LinkType) => {
+  const fetchAndSetLinks = useCallback(async () => {
+    const email = localStorage.getItem("email");
+    if (email) {
+      const response = await fetch(`/api/data/get-link?email=${email}`);
+      if (response.ok) {
+        const data = await response.json();
+        setLinks(data);
+      }
+    } else {
+      console.log("No email found in localStorage");
+    }
+  }, [setLinks]);
+
+  useEffect(() => {
+    fetchAndSetLinks();
+  }, [fetchAndSetLinks]);
+
+  const addLink = (link: Omit<LinkType, "id">) => {
     if (links.length < 5) {
-      setLinks([...links, link]);
+      const newLink = { ...link, id: uuidv4() }; // Generate a UUID for the new link
+      setLinks([...links, newLink]);
     }
   };
 
-  const removeLink = (timestamp: number) => {
-    setLinks(links.filter((link) => link.timestamp !== timestamp));
+  const removeLink = (id: string) => {
+    setLinks(links.filter((link) => link.id !== id));
   };
 
   const updateLinkPlatform = (index: number, platform: string) => {
@@ -53,6 +74,7 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
         addLink,
         updateLinkPlatform,
         updateLinkUrl,
+        fetchAndSetLinks,
       }}
     >
       {children}

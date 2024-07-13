@@ -9,7 +9,7 @@ const LinkCustomization = () => {
   const { links, setLinks, addLink } = useLinks();
 
   const handleAddLink = () => {
-    addLink({ timestamp: Date.now(), name: "", platform: "github", url: "" }); // Replace "DefaultPlatform" with the appropriate value or logic
+    addLink({ id: "", name: "", platform: "github", url: "" }); // Replace "DefaultPlatform" with the appropriate value or logic
   };
 
   const handleSave = async () => {
@@ -23,7 +23,11 @@ const LinkCustomization = () => {
           },
           body: JSON.stringify({
             email: localStorage.getItem("email"),
-            links: links.map(({ platform, url }) => ({ platform, url })),
+            links: links.map(({ platform, url, id }) => ({
+              platform,
+              url,
+              id,
+            })),
           }),
         }
       );
@@ -72,15 +76,8 @@ const LinkCustomization = () => {
               className="flex flex-col gap-y-6"
             >
               {links.map((link, index) => (
-                <Reorder.Item
-                  key={link.timestamp}
-                  value={link}
-                  className="w-full"
-                >
-                  <LinkCustomizationCard
-                    index={index}
-                    timestamp={link.timestamp}
-                  />
+                <Reorder.Item key={index} value={link} className="w-full">
+                  <LinkCustomizationCard index={index} id={link.id} />
                 </Reorder.Item>
               ))}
             </Reorder.Group>

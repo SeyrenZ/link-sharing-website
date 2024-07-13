@@ -10,10 +10,13 @@ export const POST = async (request: any) => {
 
   try {
     // Correctly map 'links' to 'linksArray' using the actual 'link' object in the map function
-    const linksArray = links.map((link: { platform: string; url: string }) => ({
-      name: link.platform,
-      url: link.url,
-    }));
+    const linksArray = links.map(
+      (link: { platform: string; url: string; id: string }) => ({
+        name: link.platform,
+        url: link.url,
+        id: link.id,
+      })
+    );
 
     const updatedUser = await user.findOneAndUpdate(
       { email: email },

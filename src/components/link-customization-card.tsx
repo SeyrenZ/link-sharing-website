@@ -14,12 +14,12 @@ import { platforms } from "../../public/data/platform-data";
 
 interface LinkCustomizationCardProps {
   index: number;
-  timestamp: number;
+  id: string;
 }
 
 const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
   index,
-  timestamp,
+  id,
 }) => {
   const { links, removeLink, updateLinkPlatform, updateLinkUrl } = useLinks();
 
@@ -41,7 +41,7 @@ const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
             Link #{index + 1}
           </div>
           <button
-            onClick={() => links.length > 0 && removeLink(timestamp)}
+            onClick={() => links.length > 0 && removeLink(id)}
             className="text-primary-grey text-[16px] leading-[150%] hover:underline"
           >
             Remove

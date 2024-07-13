@@ -16,7 +16,7 @@ const ProfileMockup = () => {
           values={links}
           className="w-[237px] h-[300px] rounded-lg flex flex-col gap-y-5 absolute bottom-[54px] left-0 right-0 mx-auto overflow-hidden"
         >
-          {links.map((link) => {
+          {links.map((link, index) => {
             // Call getPlatformInfo here where 'link' is defined
             const platformInfo = platformsValidation[link.platform] || {};
             const {
@@ -30,7 +30,7 @@ const ProfileMockup = () => {
               link.platform === "frontendmentor" ? "#333333" : "#ffffff";
 
             return (
-              <Reorder.Item key={link.timestamp} value={link}>
+              <Reorder.Item key={index} value={link}>
                 <div
                   className={`w-full h-[44px] px-4 py-[14px] bg-black rounded-lg flex items-center justify-between ${
                     uniquePlatform ? "border-[1px]" : ""
