@@ -76,7 +76,7 @@ const LinkCustomization = () => {
               className="flex flex-col gap-y-6"
             >
               {links.map((link, index) => (
-                <Reorder.Item key={index} value={link} className="w-full">
+                <Reorder.Item key={link.id} value={link} className="w-full">
                   <LinkCustomizationCard index={index} id={link.id} />
                 </Reorder.Item>
               ))}
