@@ -44,7 +44,7 @@ const Login = () => {
       fetchAndSetLinks(); // Call this function when the user is authenticated
       router.replace("/profile");
     }
-  }, [status, router, fetchAndSetLinks]);
+  }, [status, router, fetchAndSetLinks, setLinks]);
 
   return (
     <div className="w-full">

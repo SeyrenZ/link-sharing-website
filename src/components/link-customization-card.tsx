@@ -22,9 +22,15 @@ const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
   timestamp,
 }) => {
   const { links, removeLink, updateLinkPlatform, updateLinkUrl } = useLinks();
+
   const handleLinkChange = (newUrl: string) => {
     updateLinkUrl(index, newUrl);
   };
+
+  const currentPlatform = links[index]?.platform;
+  const currentPlatformObject = platforms.find(
+    (p) => p.value === currentPlatform
+  );
 
   return (
     <>
@@ -49,12 +55,21 @@ const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
             <SelectTrigger className="w-full h-[48px] rounded-lg focus-visible:ring-[0px] focus-visible:ring-offset-0 hover:border-primary-violet hover:ring-offset-0 hover:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)] transition ease-in-out duration-300">
               <SelectValue
                 placeholder={
-                  <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey ">
-                    <span className="text-primary-grey">
-                      <GithubIcon />
-                    </span>
-                    Github
-                  </div>
+                  currentPlatformObject ? (
+                    <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey ">
+                      <span className="text-primary-grey">
+                        {currentPlatformObject.icon}
+                      </span>
+                      {currentPlatformObject.name}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-x-3 text-[16px] leading-[150%] text-primary-darkGrey ">
+                      <span className="text-primary-grey">
+                        <GithubIcon />
+                      </span>
+                      Github
+                    </div>
+                  )
                 }
               />
             </SelectTrigger>
@@ -80,6 +95,7 @@ const LinkCustomizationCard: React.FC<LinkCustomizationCardProps> = ({
           <div className="text-xs text-primary-darkGrey">Link</div>
           <div className="relative">
             <Input
+              value={links[index].url}
               onChange={(e) => handleLinkChange(e.target.value)}
               placeholder="https://www.github.com/benwright"
               className="w-full rounded-lg h-[48px] pl-10 focus-visible:ring-0 focus-visible:ring-inset-0 hover:border-primary-violet hover:ring-offset-0 hover:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)] transition ease-in-out duration-300"
