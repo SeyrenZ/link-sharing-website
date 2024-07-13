@@ -18,6 +18,7 @@ type LinkContextType = {
   removeLink: (id: string) => void;
   addLink: (link: LinkType) => void;
   fetchAndSetLinks: () => void;
+  handleSave: () => void;
 };
 
 const LinkContext = createContext<LinkContextType | undefined>(undefined);
@@ -39,6 +40,35 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
       console.log("No email found in localStorage");
     }
   }, [setLinks]);
+
+  const handleSave = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/data/store-link",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: localStorage.getItem("email"),
+            links: links.map(({ platform, url, id }) => ({
+              platform,
+              url,
+              id,
+            })),
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to save links");
+      }
+      console.log("Links saved successfully!");
+    } catch (error) {
+      console.error("Error saving links:", error);
+    }
+  };
 
   useEffect(() => {
     fetchAndSetLinks();
@@ -75,6 +105,7 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
         updateLinkPlatform,
         updateLinkUrl,
         fetchAndSetLinks,
+        handleSave,
       }}
     >
       {children}

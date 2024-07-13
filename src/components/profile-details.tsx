@@ -5,7 +5,7 @@ import { Input } from "./ui/input";
 
 const ProfileDetails = () => {
   return (
-    <div className="w-full max-w-[808px] h-[834px] px-10 pt-10 rounded-xl bg-white flex flex-col gap-y-10 relative">
+    <>
       <div className="w-full flex flex-col gap-y-2">
         <div className="text-[32px] leading-[150%] font-bold text-primary-darkGrey">
           Profile Details
@@ -15,11 +15,11 @@ const ProfileDetails = () => {
         </div>
       </div>
       <div className="w-full h-[233px] p-5 bg-primary-brokenWhite rounded-xl flex items-center gap-x-4">
-        <div className="w-full max-w-[240px] text-[16px] leading-[150%] text-primary-grey">
+        <div className="w-[240px] text-[16px] leading-[150%] text-primary-grey">
           Profile picture
         </div>
         <div className="w-[193px] h-full bg-primary-lightPurple rounded-xl flex items-center justify-center">
-          <div className="w-auto h-[auto] flex flex-col items-center gap-y-2.5">
+          <div className="flex flex-col items-center gap-y-2.5">
             <ImageIcon />
             <div className="text-[16px] leading-[150%] text-primary-violet font-bold">
               + Upload Image
@@ -59,7 +59,7 @@ const ProfileDetails = () => {
           />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
