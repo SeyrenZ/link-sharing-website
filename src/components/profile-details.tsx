@@ -3,38 +3,28 @@ import React, { useEffect, useRef, useState } from "react";
 import { ImageIcon } from "./svgs";
 import { Input } from "./ui/input";
 import { useLinks } from "@/context/link-state";
+import { string } from "zod";
 
 const ProfileDetails = () => {
   const { profileDetails, updateProfileDetails } = useLinks();
 
-  // Local state for form inputs
-  const [userName, setUserName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const profile = profileDetails || {
+    userName: string,
+    lastName: string,
+    email: string,
+  };
 
-  // Handlers for input changes
-  const handleFirstNameChange = (e: any) => setUserName(e.target.value);
-  const handleLastNameChange = (e: any) => setLastName(e.target.value);
-  const handleEmailChange = (e: any) => setEmail(e.target.value);
+  const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateProfileDetails({ ...profile, userName: e.target.value });
+  };
 
-  const prevValues = useRef({ userName, lastName, email });
+  const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateProfileDetails({ ...profile, lastName: e.target.value });
+  };
 
-  useEffect(() => {
-    const {
-      userName: prevUserName,
-      lastName: prevLastName,
-      email: prevEmail,
-    } = prevValues.current;
-    if (
-      userName !== prevUserName ||
-      lastName !== prevLastName ||
-      email !== prevEmail
-    ) {
-      updateProfileDetails({ userName, lastName, email });
-      prevValues.current = { userName, lastName, email };
-    }
-  }, [userName, lastName, email, updateProfileDetails]);
-  // Save profile details to global state and backend on save
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateProfileDetails({ ...profile, email: e.target.value });
+  };
 
   return (
     <>
@@ -68,7 +58,7 @@ const ProfileDetails = () => {
             First name*
           </div>
           <Input
-            value={userName}
+            value={profile.userName}
             onChange={handleFirstNameChange}
             placeholder="e.g. John"
             className="w-full rounded-lg h-[48px] focus-visible:ring-0 focus-visible:ring-inset-0 hover:border-primary-violet hover:ring-offset-0 hover:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)] transition ease-in-out duration-300"
@@ -79,7 +69,7 @@ const ProfileDetails = () => {
             Last name*
           </div>
           <Input
-            value={lastName}
+            value={profile.lastName}
             onChange={handleLastNameChange}
             placeholder="e.g. Appleseed"
             className="w-full rounded-lg h-[48px] focus-visible:ring-0 focus-visible:ring-inset-0 hover:border-primary-violet hover:ring-offset-0 hover:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)] transition ease-in-out duration-300"
@@ -90,7 +80,7 @@ const ProfileDetails = () => {
             Email
           </div>
           <Input
-            value={email}
+            value={profile.email}
             onChange={handleEmailChange}
             placeholder="e.g. email@example.com"
             className="w-full rounded-lg h-[48px] focus-visible:ring-0 focus-visible:ring-inset-0 hover:border-primary-violet hover:ring-offset-0 hover:shadow-[0_10px_30px_rgba(99,_60,_255,_0.2)] transition ease-in-out duration-300"

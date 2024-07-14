@@ -19,8 +19,8 @@ interface LinkProfileDetails {
 type LinkContextType = {
   links: LinkType[];
   setLinks: (links: LinkType[]) => void;
-  profileDetails: LinkProfileDetails[];
-  setProfileDetails: (profileDetails: LinkProfileDetails[]) => void;
+  profileDetails: LinkProfileDetails; // Now a single object, not an array
+  setProfileDetails: (profileDetails: LinkProfileDetails) => void; // Corrected type
   updateLinkPlatform: (index: number, platform: string) => void;
   updateLinkUrl: (index: number, url: string) => void;
   updateProfileDetails: (profileDetails: LinkProfileDetails) => void;
@@ -36,23 +36,26 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [links, setLinks] = useState<LinkType[]>([]);
-  const [profileDetails, setProfileDetails] = useState<LinkProfileDetails[]>(
-    []
-  );
+  const [profileDetails, setProfileDetails] = useState<LinkProfileDetails>({
+    userName: "",
+    lastName: "",
+    email: "",
+  });
   const fetchAndSetProfileDetails = useCallback(async () => {
     const email = localStorage.getItem("email");
     if (email) {
       const response = await fetch(`/api/data/get-user-detail?email=${email}`);
       if (response.ok) {
+        // console.log(response);
         const data = await response.json();
-        console.log(data);
+
         setProfileDetails(data);
         // Assuming setProfileDetails is the state setter for profileDetails
       }
     } else {
       console.log("No email found in localStorage");
     }
-  }, [setProfileDetails]);
+  }, []);
 
   const fetchAndSetLinks = useCallback(async () => {
     const email = localStorage.getItem("email");
@@ -111,7 +114,7 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
           },
           body: JSON.stringify({
             email: localStorage.getItem("email"),
-            profileDetails: profileDetails[0],
+            profileDetails: profileDetails,
           }),
         }
       );
@@ -137,8 +140,7 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const updateProfileDetails = (profileDetails: LinkProfileDetails) => {
-    setProfileDetails([profileDetails]); // Assuming a single profile detail object for simplicity
-    // You might want to adjust this based on your actual data structure
+    setProfileDetails(profileDetails); // Wrap the object in an array
   };
 
   const updateLinkPlatform = (index: number, platform: string) => {
