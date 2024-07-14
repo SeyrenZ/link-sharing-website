@@ -17,6 +17,10 @@ const userSchema = new Schema(
       type: JSON,
       default: [],
     },
+    profileDetails: {
+      type: JSON,
+      default: [],
+    },
     userId: {
       type: String,
       unique: true,

@@ -10,11 +10,20 @@ export interface LinkType {
   url: string;
 }
 
+interface LinkProfileDetails {
+  userName: string;
+  lastName: string;
+  email: string;
+}
+
 type LinkContextType = {
   links: LinkType[];
   setLinks: (links: LinkType[]) => void;
+  profileDetails: LinkProfileDetails[];
+  setProfileDetails: (profileDetails: LinkProfileDetails[]) => void;
   updateLinkPlatform: (index: number, platform: string) => void;
-  updateLinkUrl: (index: number, url: string) => void; // Updated part
+  updateLinkUrl: (index: number, url: string) => void;
+  updateProfileDetails: (profileDetails: LinkProfileDetails) => void;
   removeLink: (id: string) => void;
   addLink: (link: LinkType) => void;
   fetchAndSetLinks: () => void;
@@ -27,6 +36,23 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [links, setLinks] = useState<LinkType[]>([]);
+  const [profileDetails, setProfileDetails] = useState<LinkProfileDetails[]>(
+    []
+  );
+  const fetchAndSetProfileDetails = useCallback(async () => {
+    const email = localStorage.getItem("email");
+    if (email) {
+      const response = await fetch(`/api/data/get-user-detail?email=${email}`);
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setProfileDetails(data);
+        // Assuming setProfileDetails is the state setter for profileDetails
+      }
+    } else {
+      console.log("No email found in localStorage");
+    }
+  }, [setProfileDetails]);
 
   const fetchAndSetLinks = useCallback(async () => {
     const email = localStorage.getItem("email");
@@ -41,9 +67,15 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [setLinks]);
 
+  useEffect(() => {
+    fetchAndSetLinks();
+    fetchAndSetProfileDetails();
+  }, [fetchAndSetLinks, fetchAndSetProfileDetails]);
+
   const handleSave = async () => {
+    console.log(profileDetails);
     try {
-      const response = await fetch(
+      const LinkResponse = await fetch(
         "http://localhost:3000/api/data/store-link",
         {
           method: "POST",
@@ -61,18 +93,37 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
         }
       );
 
-      if (!response.ok) {
+      if (!LinkResponse.ok) {
         throw new Error("Failed to save links");
       }
       console.log("Links saved successfully!");
     } catch (error) {
       console.error("Error saving links:", error);
     }
-  };
 
-  useEffect(() => {
-    fetchAndSetLinks();
-  }, [fetchAndSetLinks]);
+    try {
+      const ProfileResponse = await fetch(
+        "http://localhost:3000/api/data/store-user-detail",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: localStorage.getItem("email"),
+            profileDetails: profileDetails[0],
+          }),
+        }
+      );
+
+      if (!ProfileResponse.ok) {
+        throw new Error("Failed to save profile details");
+      }
+      console.log("Profile details saved successfully!");
+    } catch (error) {
+      console.error("Error saving profile details:", error);
+    }
+  };
 
   const addLink = (link: Omit<LinkType, "id">) => {
     if (links.length < 5) {
@@ -83,6 +134,11 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const removeLink = (id: string) => {
     setLinks(links.filter((link) => link.id !== id));
+  };
+
+  const updateProfileDetails = (profileDetails: LinkProfileDetails) => {
+    setProfileDetails([profileDetails]); // Assuming a single profile detail object for simplicity
+    // You might want to adjust this based on your actual data structure
   };
 
   const updateLinkPlatform = (index: number, platform: string) => {
@@ -100,10 +156,13 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         links,
         setLinks,
+        profileDetails,
+        setProfileDetails,
         removeLink,
         addLink,
         updateLinkPlatform,
         updateLinkUrl,
+        updateProfileDetails,
         fetchAndSetLinks,
         handleSave,
       }}

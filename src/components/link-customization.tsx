@@ -9,7 +9,12 @@ const LinkCustomization = () => {
   const { links, setLinks, addLink } = useLinks();
 
   const handleAddLink = () => {
-    addLink({ id: "", name: "", platform: "github", url: "" }); // Replace "DefaultPlatform" with the appropriate value or logic
+    addLink({
+      id: "",
+      name: "",
+      platform: "github",
+      url: "",
+    });
   };
 
   return (

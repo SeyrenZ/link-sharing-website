@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import user from "@/models/user";
 import connect from "@/utils/db";
 
+// TODO: Change login token from timestamp into JWRT token
 const authOptions = {
   providers: [
     CredentialsProvider({
