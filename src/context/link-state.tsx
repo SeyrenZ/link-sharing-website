@@ -76,7 +76,6 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [fetchAndSetLinks, fetchAndSetProfileDetails]);
 
   const handleSave = async () => {
-    console.log(profileDetails);
     try {
       const LinkResponse = await fetch(
         "http://localhost:3000/api/data/store-link",
