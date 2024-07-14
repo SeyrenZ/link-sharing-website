@@ -6,19 +6,19 @@ import { platformsValidation } from "../../public/data/platform-data";
 import Link from "next/link";
 
 const Preview = () => {
-  const { links } = useLinks();
+  const { links, profileDetails } = useLinks();
 
   return (
     <div className="w-full max-w-[1440px] mx-auto pt-[208px] flex items-center justify-center">
       <div className="z-10 relative w-full max-w-[349px] min-h-[569px] px-14 py-12 bg-white rounded-[30px] shadow-xl flex flex-col items-center gap-y-14">
         <div className="w-full flex flex-col items-center gap-y-[25px]">
           <div className="w-[104px] h-[104px] rounded-full border-[3px] border-primary-violet bg-placeholderImage bg-cover" />
-          <div className="flex flex-col items-center gap-y-2">
-            <div className="text-[32px] leading-[150%] font-bold text-primary-darkGrey">
-              Ben wright
+          <div className="w-full h-auto flex flex-col bg-white items-center justify-center gap-y-2 ">
+            <div className="text-[28px] text-primary-darkGrey font-bold">
+              {profileDetails.userName} {profileDetails.lastName}
             </div>
-            <div className="text-[16px] leading-[150%] text-primary-grey">
-              Ben@gmail.com
+            <div className="text-[16px] text-primary-darkGrey">
+              {profileDetails.email}
             </div>
           </div>
         </div>

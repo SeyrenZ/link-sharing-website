@@ -5,11 +5,19 @@ import { platformsValidation } from "../../public/data/platform-data";
 import { Reorder } from "framer-motion";
 
 const ProfileMockup = () => {
-  const { links, setLinks } = useLinks();
+  const { links, setLinks, profileDetails } = useLinks();
 
   return (
     <div className="w-full max-w-[560px] h-[834px] rounded-xl bg-white flex items-center justify-center">
       <div className="w-full max-w-[307px] h-[632px] bg-profileMockup relative">
+        <div className="absolute right-0 left-0 mx-auto top-[180px] w-[200px] h-auto flex flex-col bg-white items-center justify-center gap-y-2 ">
+          <div className="text-[18px] text-primary-darkGrey font-semibold">
+            {profileDetails.userName} {profileDetails.lastName}
+          </div>
+          <div className="text-[14px] text-primary-darkGrey">
+            {profileDetails.email}
+          </div>
+        </div>
         <Reorder.Group
           axis="y"
           onReorder={setLinks}
