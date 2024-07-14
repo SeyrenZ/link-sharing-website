@@ -77,23 +77,20 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const handleSave = async () => {
     try {
-      const LinkResponse = await fetch(
-        "http://localhost:3000/api/data/store-link",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: localStorage.getItem("email"),
-            links: links.map(({ platform, url, id }) => ({
-              platform,
-              url,
-              id,
-            })),
-          }),
-        }
-      );
+      const LinkResponse = await fetch("/api/data/store-link", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: localStorage.getItem("email"),
+          links: links.map(({ platform, url, id }) => ({
+            platform,
+            url,
+            id,
+          })),
+        }),
+      });
 
       if (!LinkResponse.ok) {
         throw new Error("Failed to save links");
@@ -104,19 +101,16 @@ export const LinkProvider: React.FC<{ children: React.ReactNode }> = ({
     }
 
     try {
-      const ProfileResponse = await fetch(
-        "http://localhost:3000/api/data/store-user-detail",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: localStorage.getItem("email"),
-            profileDetails: profileDetails,
-          }),
-        }
-      );
+      const ProfileResponse = await fetch("/api/data/store-user-detail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: localStorage.getItem("email"),
+          profileDetails: profileDetails,
+        }),
+      });
 
       if (!ProfileResponse.ok) {
         throw new Error("Failed to save profile details");
